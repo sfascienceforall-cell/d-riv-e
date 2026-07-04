@@ -1,0 +1,99 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#fff;font-family:system-ui,-apple-system,sans-serif;}
+canvas{display:block;border-radius:12px;border:1.5px solid #e8e8e8;touch-action:none;}
+.fml{font-size:13px;padding:10px 16px;border-radius:20px;background:#f5f5f5;border:1.5px solid #d0d0d0;color:#2c2c2a;margin:6px 0;font-family:ui-monospace,monospace;line-height:1.8;}
+.row{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap;}
+.pill{font-size:13px;font-weight:500;color:#2c2c2a;background:#f5f5f5;border:1.5px solid #d0d0d0;border-radius:20px;padding:6px 14px;white-space:nowrap;}
+.btn{padding:7px 15px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #d0d0d0;background:#fff;color:#2c2c2a;}
+.btn.on{border-color:#185fa5;background:#e6f1fb;color:#185fa5;}
+.val{min-width:64px;text-align:center;font-size:13px;font-weight:500;color:#2c2c2a;background:#f5f5f5;border:1.5px solid #d0d0d0;border-radius:20px;padding:5px 10px;}
+.info{font-size:12px;padding:8px 14px;border-radius:20px;background:#f5f5f5;border:1.5px solid #d0d0d0;color:#555;margin:6px 0;font-family:ui-monospace,monospace;line-height:1.7;}
+input[type=range]{flex:1;min-width:100px;}
+</style>
+
+<canvas id="cv" style="width:100%;height:60vh;min-height:340px;"></canvas>
+<div class="fml" id="fml"><b style="color:#7F77DD">f'(t₀) = lim<sub>Δt→0</sub> [f(t₀+Δt) − f(t₀)] / Δt</b> — la sécante (2 points) devient la tangente</div>
+
+<div class="row">
+  <button class="btn on" id="bP" onclick="anim=!anim;this.textContent=anim?'Pause':'Animer';this.className=anim?'btn on':'btn';">Pause</button>
+  <span class="pill" style="color:#185fa5;border-color:#b5d4f4;">position t₀</span>
+  <input type="range" id="t0" min="-2.2" max="2.2" value="-0.6" step="0.05" style="accent-color:#378ADD;max-width:170px;">
+  <span class="val" id="t0v" style="color:#185fa5;border-color:#b5d4f4;">-0.60</span>
+</div>
+<div class="row">
+  <span class="pill" style="color:#E24B4A;border-color:#f09595;">Δt</span>
+  <input type="range" id="dt" min="0.02" max="2.4" value="1.8" step="0.02" style="accent-color:#E24B4A;">
+  <span class="val" id="dtv" style="color:#E24B4A;border-color:#f09595;">1.80</span>
+</div>
+
+<div class="info" id="info"></div>
+
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const RED='#E24B4A',BLUE='#378ADD',GREEN='#1D9E75',VIOLET='#7F77DD',GREY='#9aa0a6',AX='#c8ccd0',INK='#3d3d3a';
+let W=0,H=0,dpr=1,anim=true,t0=-0.6,dt=1.8,dir=-1;
+document.getElementById('t0').addEventListener('input',e=>{t0=+e.target.value;document.getElementById('t0v').textContent=t0.toFixed(2);});
+document.getElementById('dt').addEventListener('input',e=>{dt=+e.target.value;document.getElementById('dtv').textContent=dt.toFixed(2);anim=false;document.getElementById('bP').textContent='Animer';document.getElementById('bP').className='btn';});
+
+// courbe : x(t) (position vs temps)
+function f(t){return 0.45*t*t*t - 0.3*t + 0.4;}   // cubique douce
+function fp(t){return 1.35*t*t - 0.3;}             // dérivée exacte
+
+let ox=0,oy=0,U=1;
+function syncSize(){const r=cv.getBoundingClientRect();dpr=window.devicePixelRatio||1;
+  const nW=Math.round(r.width)||700,nH=Math.round(r.height)||360;
+  if(nW!==W||nH!==H){W=nW;H=nH;cv.width=W*dpr;cv.height=H*dpr;}ctx.setTransform(dpr,0,0,dpr,0,0);}
+const X=t=>ox+t*U, Y=y=>oy-y*U;
+
+function line(t,slope,x1,x2,col,w,dash){const y1=f(t)+slope*(x1-t),y2=f(t)+slope*(x2-t);
+  ctx.strokeStyle=col;ctx.lineWidth=w;if(dash)ctx.setLineDash(dash);
+  ctx.beginPath();ctx.moveTo(X(x1),Y(y1));ctx.lineTo(X(x2),Y(y2));ctx.stroke();ctx.setLineDash([]);}
+
+function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+  ox=W*0.5;oy=H*0.60;U=Math.min(W,H)*0.20;
+  // grille + axes plein écran
+  ctx.strokeStyle='#eceff1';ctx.lineWidth=1;
+  for(let i=Math.ceil((0-ox)/U);i<=Math.floor((W-ox)/U);i++){ctx.beginPath();ctx.moveTo(ox+i*U,0);ctx.lineTo(ox+i*U,H);ctx.stroke();}
+  for(let j=Math.ceil((oy-H)/U);j<=Math.floor(oy/U);j++){ctx.beginPath();ctx.moveTo(0,oy-j*U);ctx.lineTo(W,oy-j*U);ctx.stroke();}
+  ctx.strokeStyle=AX;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,H);ctx.lineTo(ox,0);ctx.stroke();
+  ctx.fillStyle=GREY;ctx.font='11px system-ui';ctx.textAlign='left';ctx.fillText('t',W-14,oy-8);ctx.fillText('x(t)',ox+8,16);
+
+  // courbe
+  ctx.strokeStyle=BLUE;ctx.lineWidth=2.6;ctx.beginPath();
+  for(let px=0;px<=W;px+=2){const t=(px-ox)/U;const y=Y(f(t));px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);}ctx.stroke();
+
+  if(anim){dt+=dir*0.012;if(dt<0.05){dt=0.05;dir=1;}if(dt>2.2){dt=2.2;dir=-1;}
+    document.getElementById('dt').value=dt.toFixed(2);document.getElementById('dtv').textContent=dt.toFixed(2);}
+
+  const tA=t0,tB=t0+dt,yA=f(tA),yB=f(tB);
+  const secSlope=(yB-yA)/dt, tanSlope=fp(tA);
+
+  // tangente (référence, violet clair) toujours affichée
+  line(tA,tanSlope,tA-2.6,tA+2.6,'#d8d4f5',2,[6,5]);
+  // sécante
+  line(tA,secSlope,tA-2.6,tB+1.2,RED,2.4);
+
+  // triangle Δt / Δx
+  ctx.strokeStyle=GREY;ctx.setLineDash([3,3]);ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(X(tA),Y(yA));ctx.lineTo(X(tB),Y(yA));ctx.lineTo(X(tB),Y(yB));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=INK;ctx.font='600 12px system-ui';ctx.textAlign='center';
+  ctx.fillText('Δt',(X(tA)+X(tB))/2,Y(yA)+(yB>yA?16:-8));
+  ctx.textAlign='left';ctx.fillText('Δx',X(tB)+6,(Y(yA)+Y(yB))/2+4);
+
+  // points
+  [[tA,yA,BLUE,'t₀'],[tB,yB,RED,'t₀+Δt']].forEach(P=>{ctx.fillStyle='#fff';ctx.strokeStyle=P[2];ctx.lineWidth=2.5;
+    ctx.beginPath();ctx.arc(X(P[0]),Y(P[1]),6,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=P[2];ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillText(P[3],X(P[0]),Y(P[1])-12);});
+
+  const close=dt<0.15;
+  document.getElementById('info').innerHTML=
+    'Δt='+dt.toFixed(2)+' | Δx='+(yB-yA).toFixed(2)+' | <b style="color:'+RED+'">pente sécante = Δx/Δt = '+secSlope.toFixed(2)+'</b> '+
+    (close?'≈':'→')+' <b style="color:'+VIOLET+'">tangente f\'(t₀) = '+tanSlope.toFixed(2)+'</b>'+(close?'  ✓ Δt→0':'');
+  document.getElementById('fml').innerHTML= close
+    ? "<b style='color:#7F77DD'>Δt → 0 : la sécante EST la tangente</b> — f'(t₀) = pente instantanée = "+tanSlope.toFixed(2)
+    : "<b style='color:#7F77DD'>f'(t₀) = lim<sub>Δt→0</sub> [f(t₀+Δt) − f(t₀)] / Δt</b> — rapproche le 2ᵉ point (Δt petit)";
+
+  requestAnimationFrame(draw);}
+draw();
+</script>
