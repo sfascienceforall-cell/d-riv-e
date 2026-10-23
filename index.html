@@ -1,3 +1,13 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dérivée · SFA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#fff;font-family:system-ui,-apple-system,sans-serif;}
@@ -11,6 +21,81 @@ canvas{display:block;border-radius:12px;border:1.5px solid #e8e8e8;touch-action:
 .info{font-size:12px;padding:8px 14px;border-radius:20px;background:#f5f5f5;border:1.5px solid #d0d0d0;color:#555;margin:6px 0;font-family:ui-monospace,monospace;line-height:1.7;}
 input[type=range]{flex:1;min-width:100px;}
 </style>
+<style id="sfa-kit">
+/* Kit SFA (clair) — plan blanc sur fond gris-bleu froid, encre bleu nuit, or en accent unique, réglages en règle graduée. */
+:root{--bg:#f3f5f8;--paper:#ffffff;--ink:#0c1f2e;--muted:#5b6b7b;--faint:#8a98a6;--rule:#dfe4ea;--rule2:#c9d1da;
+  --gold:#d9973f;--gold-ink:#9a6420;--press:#e9edf2;
+  --f-ui:"Mulish",system-ui,-apple-system,"Segoe UI",sans-serif;--f-math:"STIX Two Text","Cambria Math",serif;
+  --f-num:"JetBrains Mono",ui-monospace,monospace;color-scheme:light}
+html{background:var(--bg)}
+body{background:var(--bg)!important;color:var(--ink);font-family:var(--f-ui)!important;font-size:15px;line-height:1.5;
+  max-width:1180px;margin:0 auto!important;padding:20px 16px 32px!important}
+.sfa-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:6px 24px;
+  border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:16px}
+.sfa-head h1{font:700 1.5rem/1.2 var(--f-ui);margin:0;letter-spacing:-.005em;text-wrap:balance}
+.sfa-head h1 small{display:block;font:400 .88rem var(--f-ui);color:var(--muted);margin-top:3px}
+.sfa-head .sfa-tag{font:600 .8rem var(--f-ui);color:var(--muted)}
+.sfa-head .sfa-tag b{color:var(--gold-ink);font-weight:700}
+select{font:500 .86rem var(--f-ui)!important;border:1px solid var(--rule2)!important;border-radius:3px!important;background:var(--paper)!important;color:var(--ink)!important;padding:5px 8px!important}
+.sfa-stage{border:1px solid var(--rule)!important;border-radius:4px!important;box-shadow:0 1px 2px rgba(12,31,46,.05),0 8px 24px -16px rgba(12,31,46,.18)}
+.sfa-stage canvas{border:0!important;box-shadow:none!important}
+canvas{background:var(--paper);border:1px solid var(--rule)!important;border-radius:4px!important;box-shadow:0 1px 2px rgba(12,31,46,.05),0 8px 24px -16px rgba(12,31,46,.18)}
+.row{gap:12px!important;margin:10px 0!important}
+.pill,.lbl,.tag{background:none!important;border:0!important;border-radius:0!important;padding:0!important;
+  font:600 .86rem var(--f-ui)!important;color:var(--muted);min-width:0}
+.val{background:none!important;border:0!important;border-radius:0!important;padding:0!important;
+  font:500 .9rem var(--f-num)!important;font-variant-numeric:tabular-nums;text-align:right}
+.btn{background:transparent!important;border:1px solid var(--rule2)!important;border-radius:3px!important;color:var(--muted)!important;
+  font:600 .82rem var(--f-ui)!important;padding:6px 12px!important;transition:color .15s,background .15s}
+.btn:hover{color:var(--ink)!important;background:var(--press)!important}
+.btn.on{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important;box-shadow:inset 0 -2px 0 var(--gold)}
+.fml{background:transparent!important;border:0!important;border-left:2px solid var(--gold)!important;border-radius:0!important;
+  font:400 1.08rem/1.7 var(--f-math)!important;color:var(--ink);padding:4px 0 4px 14px!important;margin:14px 0!important}
+.info{background:var(--paper)!important;border:1px solid var(--rule)!important;border-radius:3px!important;
+  font:500 .84rem/1.8 var(--f-num)!important;color:var(--muted)!important;padding:8px 14px!important}
+input[type=range]{-webkit-appearance:none;appearance:none;height:24px;background:linear-gradient(var(--rule2),var(--rule2)) center/100% 2px no-repeat;cursor:pointer;--pc:var(--gold)}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:transparent}
+input[type=range]::-moz-range-track{height:2px;background:transparent}
+input[type=range]::-moz-range-progress{height:2px;background:var(--pc)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:6px;height:20px;border-radius:1px;background:var(--pc);margin-top:-9px;border:0}
+input[type=range]::-moz-range-thumb{width:6px;height:20px;border-radius:1px;background:var(--pc);border:0}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.sfa-foot{margin-top:22px;padding-top:10px;border-top:1px solid var(--rule);font-size:.78rem;color:var(--faint)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script>
+/* Curseurs : la couleur du curseur reprend celle de son accent-color d'origine ; remplissage gauche en couleur. */
+addEventListener('DOMContentLoaded',()=>{
+/* Curseurs : couleur reprise de accent-color, remplissage à gauche. Resynchronisé en continu pour suivre
+   les curseurs créés ou déplacés par la simulation elle-même. */
+const fill=r=>{if(!r.dataset.sfa){r.dataset.sfa=1;const c=r.style.accentColor||getComputedStyle(r).accentColor;
+    if(c&&c!=='auto')r.style.setProperty('--pc',c);}
+  const v=r.value+'|'+r.min+'|'+r.max;if(r._sv===v)return;r._sv=v;
+  const p=(r.value-r.min)/(r.max-r.min)*100;
+  r.style.background=`linear-gradient(to right,var(--pc) ${p}%,var(--rule2) ${p}%) center/100% 2px no-repeat`;};
+const all=()=>document.querySelectorAll('input[type=range]').forEach(fill);
+all();document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('input[type=range]'))fill(e.target);});
+setInterval(all,150);
+/* Contrôles écrits en style en ligne (sans classe) : on leur donne les classes du kit. */
+const st=e=>(e.getAttribute('style')||'').replace(/\s/g,'').toLowerCase();
+const isPill=e=>/border-radius:(1[6-9]|20|99)px/.test(st(e));
+document.querySelectorAll('span').forEach(sp=>{if(sp.classList.length||!isPill(sp))return;
+  const n=sp.nextElementSibling,pv=sp.previousElementSibling;
+  if(n&&n.matches('input[type=range],select,button'))sp.classList.add('pill');
+  else if(pv&&pv.matches('input[type=range],select'))sp.classList.add('val');
+  else sp.classList.add('pill');});
+document.querySelectorAll('div').forEach(d=>{if(d.classList.length)return;const s=st(d);
+  if(/border-radius:(1[6-9]|20)px/.test(s)&&/monospace/.test(s))d.classList.add(d.id==='fml'?'fml':'info');
+  else if(d.querySelector(':scope>canvas')&&/border-radius:1[0-4]px/.test(s))d.classList.add('sfa-stage');});
+const tag=b=>{const s=st(b);b.classList.toggle('on',/#185fa5|rgb\(24,95,165\)/.test(s)&&!/#fff[;f]|#ffffff|rgb\(255,255,255\)/.test(s.match(/background:[^;]+/)?.[0]||''));};
+document.querySelectorAll('button:not(.btn)').forEach(b=>{b.classList.add('btn','sfa-n');tag(b);});
+new MutationObserver(ms=>ms.forEach(m=>{if(m.target.classList&&m.target.classList.contains('sfa-n'))tag(m.target);}))
+  .observe(document.body,{subtree:true,attributes:true,attributeFilter:['style']});
+});
+</script>
+<header class="sfa-head"><h1>Dérivée<small>Pente de la tangente et taux de variation</small></h1><span class="sfa-tag"><b>SFA</b> · Physique · Outils</span></header>
+
+
 
 <canvas id="cv" style="width:100%;height:60vh;min-height:340px;"></canvas>
 <div class="fml" id="fml"><b style="color:#7F77DD">f'(t₀) = lim<sub>Δt→0</sub> [f(t₀+Δt) − f(t₀)] / Δt</b> — la sécante (2 points) devient la tangente</div>
@@ -18,7 +103,7 @@ input[type=range]{flex:1;min-width:100px;}
 <div class="row">
   <button class="btn on" id="bP" onclick="anim=!anim;this.textContent=anim?'Pause':'Animer';this.className=anim?'btn on':'btn';">Pause</button>
   <span class="pill" style="color:#185fa5;border-color:#b5d4f4;">position t₀</span>
-  <input type="range" id="t0" min="-2.2" max="2.2" value="-0.6" step="0.05" style="accent-color:#378ADD;max-width:170px;">
+  <input type="range" id="t0" min="-1.7" max="1.7" value="-0.6" step="0.05" style="accent-color:#378ADD;max-width:170px;">
   <span class="val" id="t0v" style="color:#185fa5;border-color:#b5d4f4;">-0.60</span>
 </div>
 <div class="row">
@@ -57,7 +142,7 @@ function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillR
   for(let i=Math.ceil((0-ox)/U);i<=Math.floor((W-ox)/U);i++){ctx.beginPath();ctx.moveTo(ox+i*U,0);ctx.lineTo(ox+i*U,H);ctx.stroke();}
   for(let j=Math.ceil((oy-H)/U);j<=Math.floor(oy/U);j++){ctx.beginPath();ctx.moveTo(0,oy-j*U);ctx.lineTo(W,oy-j*U);ctx.stroke();}
   ctx.strokeStyle=AX;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,H);ctx.lineTo(ox,0);ctx.stroke();
-  ctx.fillStyle=GREY;ctx.font='11px system-ui';ctx.textAlign='left';ctx.fillText('t',W-14,oy-8);ctx.fillText('x(t)',ox+8,16);
+  ctx.fillStyle=GREY;ctx.font='11px Mulish,system-ui,sans-serif';ctx.textAlign='left';ctx.fillText('t',W-14,oy-8);ctx.fillText('x(t)',ox+8,16);
 
   // courbe
   ctx.strokeStyle=BLUE;ctx.lineWidth=2.6;ctx.beginPath();
@@ -77,14 +162,18 @@ function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillR
   // triangle Δt / Δx
   ctx.strokeStyle=GREY;ctx.setLineDash([3,3]);ctx.lineWidth=1.2;
   ctx.beginPath();ctx.moveTo(X(tA),Y(yA));ctx.lineTo(X(tB),Y(yA));ctx.lineTo(X(tB),Y(yB));ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle=INK;ctx.font='600 12px system-ui';ctx.textAlign='center';
-  ctx.fillText('Δt',(X(tA)+X(tB))/2,Y(yA)+(yB>yA?16:-8));
-  ctx.textAlign='left';ctx.fillText('Δx',X(tB)+6,(Y(yA)+Y(yB))/2+4);
+  ctx.fillStyle=INK;ctx.font='600 12px Mulish,system-ui,sans-serif';ctx.textAlign='center';
+  // Δt / Δx masqués quand le côté du triangle est trop court (sinon ils se superposent aux points)
+  if(X(tB)-X(tA)>40)ctx.fillText('Δt',(X(tA)+X(tB))/2,Y(yA)+(yB>yA?16:-8));
+  ctx.textAlign='left';if(Math.abs(Y(yB)-Y(yA))>34)ctx.fillText('Δx',X(tB)+6,(Y(yA)+Y(yB))/2+4);
 
   // points
   [[tA,yA,BLUE,'t₀'],[tB,yB,RED,'t₀+Δt']].forEach(P=>{ctx.fillStyle='#fff';ctx.strokeStyle=P[2];ctx.lineWidth=2.5;
     ctx.beginPath();ctx.arc(X(P[0]),Y(P[1]),6,0,7);ctx.fill();ctx.stroke();
-    ctx.fillStyle=P[2];ctx.font='600 11px system-ui';ctx.textAlign='center';ctx.fillText(P[3],X(P[0]),Y(P[1])-12);});
+    ctx.fillStyle=P[2];ctx.font='600 11px Mulish,system-ui,sans-serif';const isA=P[3]==='t₀';   // t₀ à gauche, t₀+Δt à droite : jamais l'un sur l'autre
+    const lx=X(P[0])+(isA?-7:7),ly=Y(P[1])-10,lw=ctx.measureText(P[3]).width;
+    ctx.fillStyle='rgba(255,255,255,0.85)';ctx.fillRect(isA?lx-lw-2:lx-2,ly-10,lw+4,13);   // lisible sur la courbe
+    ctx.fillStyle=P[2];ctx.textAlign=isA?'right':'left';ctx.fillText(P[3],lx,ly);});
 
   const close=dt<0.15;
   document.getElementById('info').innerHTML=
@@ -97,3 +186,6 @@ function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillR
   requestAnimationFrame(draw);}
 draw();
 </script>
+<footer class="sfa-foot">Science For All · simulations interactives</footer>
+</body>
+</html>
