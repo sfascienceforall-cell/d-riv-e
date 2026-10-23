@@ -70,13 +70,17 @@ a{color:inherit}
 @media (max-width:520px){.row,div:has(>input[type=range]){flex-wrap:wrap!important}
   .row>.pill:first-child,div:has(>input[type=range])>.pill:first-child{min-width:0!important;flex:1 1 100%}
   input[type=range]{min-width:0!important}.val{min-width:0!important}}
-.val{background:none!important;border:0!important;border-radius:0!important;padding:0!important;font:600 .9rem var(--f-num)!important;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
-.btn{background:var(--paper)!important;border:1px solid var(--line2)!important;border-radius:7px!important;color:var(--ink2)!important;
-  font:700 .82rem var(--f-ui)!important;padding:7px 13px!important;transition:background .15s,border-color .15s;cursor:pointer}
+.val{background:none!important;border:0!important;border-radius:0!important;padding:0!important;font:800 .92rem var(--f-ui)!important;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink);white-space:nowrap}
+.btn{background:var(--paper)!important;border:1px solid var(--line2)!important;border-radius:8px!important;color:var(--ink)!important;
+  font:800 .82rem var(--f-ui)!important;letter-spacing:.005em;padding:8px 14px!important;transition:background .15s,border-color .15s;cursor:pointer}
+.btn:active{transform:translateY(1px)}
 .btn:hover{background:var(--press)!important;border-color:var(--faint)!important}
 .btn.on{background:var(--navy)!important;border-color:var(--navy)!important;color:#fff!important;box-shadow:none}
-.fml{background:var(--sel)!important;border:0!important;border-radius:10px!important;font:400 1.06rem/1.7 var(--f-math)!important;color:var(--ink);padding:10px 14px!important;margin:12px 0!important}
-.info{background:var(--bg)!important;border:1px solid var(--line)!important;border-radius:10px!important;font:500 .84rem/1.8 var(--f-num)!important;color:var(--muted)!important;padding:9px 14px!important}
+.fml{background:var(--sel)!important;border:0!important;border-left:4px solid var(--navy)!important;border-radius:10px!important;font:600 1rem/1.75 var(--f-ui)!important;color:var(--ink);padding:12px 16px!important;margin:12px 0!important}
+.fml b,.fml strong{font-weight:800}
+.fml sub,.fml sup,.info sub,.info sup{font-size:.72em}
+.info{background:var(--bg)!important;border:1px solid var(--line)!important;border-radius:10px!important;font:600 .86rem/1.8 var(--f-ui)!important;font-variant-numeric:tabular-nums;color:var(--muted)!important;padding:10px 14px!important}
+.info b,.info strong{font-weight:800}
 select{font:600 .86rem var(--f-ui)!important;border:1px solid var(--line2)!important;border-radius:7px!important;background:var(--paper)!important;color:var(--ink)!important;padding:6px 8px!important}
 input[type=range]{-webkit-appearance:none;appearance:none;height:24px;background:linear-gradient(var(--line),var(--line)) center/100% 4px no-repeat;cursor:pointer;--pc:var(--blue)}
 input[type=range]::-webkit-slider-runnable-track{height:4px;background:transparent;border-radius:2px}
@@ -94,7 +98,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(-
 .sfa-list a{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:baseline;padding:7px 8px;border-radius:8px;text-decoration:none;font:600 13px/1.35 var(--f-ui);color:var(--ink2)}
 .sfa-list a:hover{background:var(--press)}
 .sfa-list a.on{background:var(--sel);color:var(--chip-ink)}
-.sfa-list a i{font:600 11px var(--f-num);font-style:normal;color:var(--faint)}
+.sfa-list a i{font:800 11px var(--f-ui);font-style:normal;color:var(--faint)}
 .sfa-promo{background:var(--navy);color:#fff;border-radius:12px;padding:16px}
 .sfa-promo small{display:block;font:800 10px var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);margin-bottom:6px}
 .sfa-promo b{display:block;font:800 16px/1.3 var(--f-ui);margin-bottom:12px}
@@ -134,8 +138,8 @@ new MutationObserver(ms=>ms.forEach(m=>{if(m.target.classList&&m.target.classLis
 </script>
 <header class="sfa-top"><div class="in">
   <a class="sfa-logo" href="https://sfascienceforall-cell.github.io/simulations/"><i>SFA</i>Science For All</a>
-  <nav class="sfa-nav"><a class="on" href="https://sfascienceforall-cell.github.io/simulations/">Simulations</a><a href="#">Prépa médecine</a></nav>
-  <a class="sfa-cta" href="#">Découvrir la prépa</a></div></header>
+  <nav class="sfa-nav"><a class="on" href="https://sfascienceforall-cell.github.io/simulations/">Simulations</a><a href="https://sfascienceforall-cell.github.io/simulations/#EX">Exercices</a><a href="https://sfascienceforall-cell.github.io/simulations/prepa/">Prépa médecine</a></nav>
+  <a class="sfa-cta" href="https://sfascienceforall-cell.github.io/simulations/prepa/">Découvrir la prépa</a></div></header>
 <div class="sfa-page">
 <nav class="sfa-crumbs" aria-label="Fil d'Ariane"><a href="https://sfascienceforall-cell.github.io/simulations/">Simulations</a>›<a href="https://sfascienceforall-cell.github.io/simulations/#PH1">PH1 · Cinématique</a>›<b>Dérivée</b></nav>
 <div class="sfa-grid"><main style="min-width:0">
@@ -163,7 +167,8 @@ new MutationObserver(ms=>ms.forEach(m=>{if(m.target.classList&&m.target.classLis
 
 <script>
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
-const RED='#E24B4A',BLUE='#378ADD',GREEN='#1D9E75',VIOLET='#7F77DD',GREY='#9aa0a6',AX='#c8ccd0',INK='#3d3d3a';
+const RED='#E24B4A',RED2='#a32d2d',BLUE='#378ADD',BLUE2='#185fa5',GREEN='#1D9E75',VIOLET='#7F77DD',GREY='#8a95a3',AX='#d3d9e2',GRID='#e9edf2',INK='#13233a';
+const FONT=(w,s)=>w+' '+s+'px Mulish,system-ui,sans-serif';
 let W=0,H=0,dpr=1,anim=true,t0=-0.6,dt=1.8,dir=-1;
 document.getElementById('t0').addEventListener('input',e=>{t0=+e.target.value;document.getElementById('t0v').textContent=t0.toFixed(2);});
 document.getElementById('dt').addEventListener('input',e=>{dt=+e.target.value;document.getElementById('dtv').textContent=dt.toFixed(2);anim=false;document.getElementById('bP').textContent='Animer';document.getElementById('bP').className='btn';});
@@ -178,22 +183,52 @@ function syncSize(){const r=cv.getBoundingClientRect();dpr=window.devicePixelRat
   if(nW!==W||nH!==H){W=nW;H=nH;cv.width=W*dpr;cv.height=H*dpr;}ctx.setTransform(dpr,0,0,dpr,0,0);}
 const X=t=>ox+t*U, Y=y=>oy-y*U;
 
+// --- utilitaires de dessin (charte SFA) ---
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function halo(txt,x,y,col,font,align){ctx.font=font;ctx.textAlign=align||'left';ctx.textBaseline='middle';
+  ctx.lineJoin='round';ctx.strokeStyle='rgba(255,255,255,0.95)';ctx.lineWidth=4;ctx.strokeText(txt,x,y);ctx.fillStyle=col;ctx.fillText(txt,x,y);ctx.textBaseline='alphabetic';}
+function arrowHead(x,y,ang,s,col){ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-s*Math.cos(ang-0.42),y-s*Math.sin(ang-0.42));ctx.lineTo(x-s*Math.cos(ang+0.42),y-s*Math.sin(ang+0.42));ctx.closePath();ctx.fill();}
 function line(t,slope,x1,x2,col,w,dash){const y1=f(t)+slope*(x1-t),y2=f(t)+slope*(x2-t);
-  ctx.strokeStyle=col;ctx.lineWidth=w;if(dash)ctx.setLineDash(dash);
+  ctx.strokeStyle=col;ctx.lineWidth=w;ctx.lineCap='round';if(dash)ctx.setLineDash(dash);
   ctx.beginPath();ctx.moveTo(X(x1),Y(y1));ctx.lineTo(X(x2),Y(y2));ctx.stroke();ctx.setLineDash([]);}
-
+// étiquette posée le long d'une droite (au bout x2), côté choisi pour rester dans le cadre
+let busy=[];   // rectangles déjà occupés (points, encadré, étiquettes) : les étiquettes des droites les évitent
+const hit=(r)=>busy.some(b=>r.x<b.x+b.w&&r.x+r.w>b.x&&r.y<b.y+b.h&&r.y+r.h>b.y);
+function lineLabel(t,slope,x1,x2,txt,col,side){ctx.font=FONT(800,13);const w=ctx.measureText(txt).width,h=16;
+  // normale (en pixels) à la droite : on décale l'étiquette de ce côté pour qu'elle ne soit pas sur le trait
+  const n=Math.hypot(1,slope),nx=slope/n,ny=1/n,off=w/2*Math.abs(nx)+h/2*ny+7;
+  for(const sd of [side,-side])for(let k=0;k<=48;k++){const tt=x1+(x2-x1)*k/48;
+    const px=X(tt)+sd*nx*off,py=Y(f(t)+slope*(tt-t))+sd*ny*off;
+    const r={x:px-w/2-3,y:py-h/2,w:w+6,h:h};
+    if(r.x<6||r.x+r.w>W-6||r.y<6||r.y+r.h>H-6||Math.abs(py-oy)<20||hit(r))continue;
+    busy.push(r);halo(txt,px,py,col,FONT(800,13),'center');return;}}
 function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
   ox=W*0.5;oy=H*0.60;U=Math.min(W,H)*0.20;
-  // grille + axes plein écran
-  ctx.strokeStyle='#eceff1';ctx.lineWidth=1;
-  for(let i=Math.ceil((0-ox)/U);i<=Math.floor((W-ox)/U);i++){ctx.beginPath();ctx.moveTo(ox+i*U,0);ctx.lineTo(ox+i*U,H);ctx.stroke();}
-  for(let j=Math.ceil((oy-H)/U);j<=Math.floor(oy/U);j++){ctx.beginPath();ctx.moveTo(0,oy-j*U);ctx.lineTo(W,oy-j*U);ctx.stroke();}
-  ctx.strokeStyle=AX;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.moveTo(ox,H);ctx.lineTo(ox,0);ctx.stroke();
-  ctx.fillStyle=GREY;ctx.font='11px Mulish,system-ui,sans-serif';ctx.textAlign='left';ctx.fillText('t',W-14,oy-8);ctx.fillText('x(t)',ox+8,16);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  // grille discrète + demi-graduations
+  const i0=Math.ceil((0-ox)/U),i1=Math.floor((W-ox)/U),j0=Math.ceil((oy-H)/U),j1=Math.floor(oy/U);
+  ctx.strokeStyle='#f3f5f8';ctx.lineWidth=1;
+  for(let i=i0*2-1;i<=i1*2+1;i++){const x=Math.round(ox+i*U/2)+0.5;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let j=j0*2-1;j<=j1*2+1;j++){const y=Math.round(oy-j*U/2)+0.5;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.strokeStyle=GRID;
+  for(let i=i0;i<=i1;i++){const x=Math.round(ox+i*U)+0.5;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let j=j0;j<=j1;j++){const y=Math.round(oy-j*U)+0.5;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  // axes avec flèches
+  ctx.strokeStyle=AX;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(4,oy);ctx.lineTo(W-6,oy);ctx.moveTo(ox,H-4);ctx.lineTo(ox,6);ctx.stroke();
+  arrowHead(W-4,oy,0,9,AX);arrowHead(ox,4,-Math.PI/2,9,AX);
+  // graduations chiffrées
+  ctx.font=FONT(700,12);ctx.fillStyle=GREY;ctx.textAlign='center';
+  for(let i=i0;i<=i1;i++){if(i===0)continue;const x=ox+i*U;if(x<14||x>W-26)continue;
+    ctx.strokeStyle=AX;ctx.beginPath();ctx.moveTo(x,oy-4);ctx.lineTo(x,oy+4);ctx.stroke();ctx.fillText(String(i),x,oy+18);}
+  ctx.textAlign='right';
+  for(let j=j0;j<=j1;j++){if(j===0)continue;const y=oy-j*U;if(y<24||y>H-10)continue;
+    ctx.strokeStyle=AX;ctx.beginPath();ctx.moveTo(ox-4,y);ctx.lineTo(ox+4,y);ctx.stroke();ctx.fillText(String(j),ox-8,y+4);}
+  ctx.fillText('0',ox-7,oy+17);
+  halo('t',W-12,oy-14,GREY,FONT(800,13),'center');halo('x(t)',ox+10,14,GREY,FONT(800,13),'left');
 
-  // courbe
-  ctx.strokeStyle=BLUE;ctx.lineWidth=2.6;ctx.beginPath();
-  for(let px=0;px<=W;px+=2){const t=(px-ox)/U;const y=Y(f(t));px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);}ctx.stroke();
+  // courbe (avec léger liseré blanc pour se détacher de la grille)
+  ctx.beginPath();for(let px=-2;px<=W+2;px+=2){const t=(px-ox)/U;const y=Y(f(t));px===-2?ctx.moveTo(px,y):ctx.lineTo(px,y);}
+  ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=6;ctx.stroke();ctx.strokeStyle=BLUE;ctx.lineWidth=3;ctx.stroke();
 
   if(anim){dt+=dir*0.012;if(dt<0.05){dt=0.05;dir=1;}if(dt>2.2){dt=2.2;dir=-1;}
     document.getElementById('dt').value=dt.toFixed(2);document.getElementById('dtv').textContent=dt.toFixed(2);}
@@ -201,28 +236,46 @@ function draw(){syncSize();ctx.clearRect(0,0,W,H);ctx.fillStyle='#fff';ctx.fillR
   const tA=t0,tB=t0+dt,yA=f(tA),yB=f(tB);
   const secSlope=(yB-yA)/dt, tanSlope=fp(tA);
 
-  // tangente (référence, violet clair) toujours affichée
-  line(tA,tanSlope,tA-2.6,tA+2.6,'#d8d4f5',2,[6,5]);
-  // sécante
-  line(tA,secSlope,tA-2.6,tB+1.2,RED,2.4);
-
-  // triangle Δt / Δx
-  ctx.strokeStyle=GREY;ctx.setLineDash([3,3]);ctx.lineWidth=1.2;
+  // triangle Δt / Δx (léger fond rouge pâle)
+  ctx.fillStyle='rgba(226,75,74,0.07)';ctx.beginPath();ctx.moveTo(X(tA),Y(yA));ctx.lineTo(X(tB),Y(yA));ctx.lineTo(X(tB),Y(yB));ctx.closePath();ctx.fill();
+  ctx.strokeStyle=GREY;ctx.setLineDash([4,4]);ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(X(tA),Y(yA));ctx.lineTo(X(tB),Y(yA));ctx.lineTo(X(tB),Y(yB));ctx.stroke();ctx.setLineDash([]);
-  ctx.fillStyle=INK;ctx.font='600 12px Mulish,system-ui,sans-serif';ctx.textAlign='center';
-  // Δt / Δx masqués quand le côté du triangle est trop court (sinon ils se superposent aux points)
-  if(X(tB)-X(tA)>40)ctx.fillText('Δt',(X(tA)+X(tB))/2,Y(yA)+(yB>yA?16:-8));
-  ctx.textAlign='left';if(Math.abs(Y(yB)-Y(yA))>34)ctx.fillText('Δx',X(tB)+6,(Y(yA)+Y(yB))/2+4);
 
-  // points
-  [[tA,yA,BLUE,'t₀'],[tB,yB,RED,'t₀+Δt']].forEach(P=>{ctx.fillStyle='#fff';ctx.strokeStyle=P[2];ctx.lineWidth=2.5;
-    ctx.beginPath();ctx.arc(X(P[0]),Y(P[1]),6,0,7);ctx.fill();ctx.stroke();
-    ctx.fillStyle=P[2];ctx.font='600 11px Mulish,system-ui,sans-serif';const isA=P[3]==='t₀';   // t₀ à gauche, t₀+Δt à droite : jamais l'un sur l'autre
-    const lx=X(P[0])+(isA?-7:7),ly=Y(P[1])-10,lw=ctx.measureText(P[3]).width;
-    ctx.fillStyle='rgba(255,255,255,0.85)';ctx.fillRect(isA?lx-lw-2:lx-2,ly-10,lw+4,13);   // lisible sur la courbe
-    ctx.fillStyle=P[2];ctx.textAlign=isA?'right':'left';ctx.fillText(P[3],lx,ly);});
-
+  // tangente (référence, violet pointillé) toujours affichée
+  line(tA,tanSlope,tA-2.6,tA+2.6,'rgba(127,119,221,0.75)',2.5,[8,6]);
+  // sécante
+  line(tA,secSlope,tA-2.6,tB+1.2,RED,3);
+  // noms des droites, aux extrémités gauches (sécante et tangente de part et d'autre)
   const close=dt<0.15;
+  busy=[{x:X(tA)-34,y:Y(yA)-28,w:68,h:46},{x:X(tB)-34,y:Y(yB)-28,w:80,h:46},{x:6,y:6,w:(W<520?165:200),h:56}];
+  const secAbove=secSlope<tanSlope;   // à gauche, la droite la plus haute est celle de plus faible pente
+  lineLabel(tA,secSlope,tA-2.5,tB+1.1,'sécante',RED2,secAbove?-1:1);
+  lineLabel(tA,tanSlope,tA-2.5,tA+2.5,'tangente',VIOLET,secAbove?1:-1);
+
+  // Δt / Δx masqués quand le côté du triangle est trop court (sinon ils se superposent aux points)
+  if(X(tB)-X(tA)>40)halo('Δt',(X(tA)+X(tB))/2,Y(yA)+(yB>yA?15:-13),INK,FONT(800,13),'center');
+  if(Math.abs(Y(yB)-Y(yA))>34)halo('Δx',X(tB)+8,(Y(yA)+Y(yB))/2,INK,FONT(800,13),'left');
+
+  // points (ombre douce + anneau coloré)
+  [[tA,yA,BLUE,BLUE2,'t₀'],[tB,yB,RED,RED2,'t₀+Δt']].forEach(P=>{const px=X(P[0]),py=Y(P[1]);
+    ctx.save();ctx.shadowColor='rgba(19,35,58,0.25)';ctx.shadowBlur=6;ctx.shadowOffsetY=1.5;
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(px,py,7.5,0,7);ctx.fill();ctx.restore();
+    ctx.strokeStyle=P[2];ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,py,7.5,0,7);ctx.stroke();
+    ctx.fillStyle=P[2];ctx.beginPath();ctx.arc(px,py,2.6,0,7);ctx.fill();
+    const isA=P[4]==='t₀';   // t₀ à gauche, t₀+Δt à droite : jamais l'un sur l'autre
+    halo(P[4],px+(isA?-11:11),py-15,P[3],FONT(800,13),isA?'right':'left');});
+
+  // encadré de lecture (coin haut-gauche, zone libre de la courbe)
+  {const pad=10,lh=19,l1=(W<520?'sécante = ':'pente sécante = ')+secSlope.toFixed(2),l2="f'(t₀) = "+tanSlope.toFixed(2)+(close?'  ✓':'');
+   ctx.font=FONT(800,13);const bw=Math.max(ctx.measureText(l1).width,ctx.measureText(l2).width)+pad*2+16,bh=lh*2+pad*2-4;
+   const bx=10,by=10;
+   ctx.save();ctx.shadowColor='rgba(19,35,58,0.08)';ctx.shadowBlur=8;ctx.shadowOffsetY=2;ctx.fillStyle='#fff';rr(bx,by,bw,bh,8);ctx.fill();ctx.restore();
+   ctx.strokeStyle='#e3e7ed';ctx.lineWidth=1;rr(bx+0.5,by+0.5,bw-1,bh-1,8);ctx.stroke();
+   ctx.lineWidth=3;ctx.strokeStyle=RED;ctx.beginPath();ctx.moveTo(bx+pad,by+pad+lh/2-2);ctx.lineTo(bx+pad+10,by+pad+lh/2-2);ctx.stroke();
+   ctx.strokeStyle=VIOLET;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(bx+pad,by+pad+lh*1.5-2);ctx.lineTo(bx+pad+10,by+pad+lh*1.5-2);ctx.stroke();ctx.setLineDash([]);
+   ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillStyle=RED2;ctx.fillText(l1,bx+pad+16,by+pad+lh/2-2);
+   ctx.fillStyle=VIOLET;ctx.fillText(l2,bx+pad+16,by+pad+lh*1.5-2);ctx.textBaseline='alphabetic';}
+
   document.getElementById('info').innerHTML=
     'Δt='+dt.toFixed(2)+' | Δx='+(yB-yA).toFixed(2)+' | <b style="color:'+RED+'">pente sécante = Δx/Δt = '+secSlope.toFixed(2)+'</b> '+
     (close?'≈':'→')+' <b style="color:'+VIOLET+'">tangente f\'(t₀) = '+tanSlope.toFixed(2)+'</b>'+(close?'  ✓ Δt→0':'');
@@ -236,7 +289,7 @@ draw();
 </section></main>
 <aside class="sfa-side">
   <div class="sfa-list"><h2>PH1 · Cinématique<span>5 simulations</span></h2><ol><li><a href="https://sfascienceforall-cell.github.io/MRUA/"><i>01</i>MRUA</a></li><li><a class="on" aria-current="page" href="https://sfascienceforall-cell.github.io/d-riv-e/"><i>02</i>Dérivée</a></li><li><a href="https://sfascienceforall-cell.github.io/vecteurs/"><i>03</i>Vecteurs</a></li><li><a href="https://sfascienceforall-cell.github.io/simulations/projectile/"><i>04</i>Le projectile</a></li><li><a href="https://sfascienceforall-cell.github.io/MCUA/"><i>05</i>MCUA</a></li></ol></div>
-  <div class="sfa-promo"><small>Envie d'aller plus loin ?</small><b>La prépa SFA : le cours complet, les exercices type examen corrigés et le suivi.</b><a href="#">Voir la prépa</a></div>
+  <div class="sfa-promo"><small>Envie d'aller plus loin ?</small><b>La prépa SFA : le cours complet, les exercices type examen corrigés et le suivi.</b><a href="https://sfascienceforall-cell.github.io/simulations/prepa/">Voir la prépa</a></div>
 </aside></div></div>
 <footer class="sfa-foot">Science For All · simulations interactives de physique</footer>
 </body>
